@@ -50,7 +50,7 @@ import java.util.Set;
 public class StylometricAnalysisMain {
 
     private Set<String> functionWords;			// Contains the function words we are using
-    private static String path = "C:\\Users\\ITE\\Documents\\NetBeansProjects\\StylometricWithREST\\src\\main\\resources\\function_words.txt"; 	// TODO: Change to the correct path;
+    private static String path = "C:\\Users\\ITE\\Documents\\NetBeansProjects\\StylometricAnalysisWithREST\\StylometricAnalysisWithREST\\src\\main\\resources\\function_words.txt"; 	// TODO: Change to the correct path;
     private List<Alias> aliases;				// The aliases we are interested in to compare        
     private List<List<Float>> featVectorForAllAliases;
 
@@ -395,8 +395,7 @@ public class StylometricAnalysisMain {
      * Standardize/normalize the feature vectors for all aliases. Aim is mean 0
      * and variance 1 for each feature vector. Please note that this will result
      * in feature vectors that depend on the feature vectors of the other
-     * aliases... TODO: This code has not been double checked, it may be flawed!
-     * Double check before use!!!
+     * aliases...
      */
     public void normalizeFeatureVector() {
         int nrOfFeatures = featVectorForAllAliases.get(0).size();
@@ -451,15 +450,6 @@ public class StylometricAnalysisMain {
         test.aliases.add(kolle2);
 
         test.createFeatureVectors();
-
-        for (Alias alias : test.aliases) {
-            List<Float> featVec = alias.getFeatureVector();
-            for (float value : featVec) {
-                System.out.println(value);
-            }
-            System.out.println();
-        }
-
         test.compareAllPairsOfAliases();
         System.out.println("The best matching alias is: " + test.findBestMatch(0));
     }
