@@ -7,6 +7,7 @@ package com.board.analyze.controller;
 import com.board.analyze.model.Alias;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.sql.SQLException;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +59,11 @@ public class StylometricAnalysisMain {
         functionWords = new LinkedHashSet<String>();
         loadFunctionWords();
         aliases = new ArrayList<Alias>();
+    }
+    
+    public void executeStylo(List<Alias> aliasList) throws SQLException {
+        this.aliases = aliasList;
+        createFeatureVectors();
     }
 
     /**
@@ -432,25 +438,5 @@ public class StylometricAnalysisMain {
             }
         }
 
-    }
-
-    public static void main(String[] args) {
-        StylometricAnalysisMain test = new StylometricAnalysisMain();
-        Alias kalle = new Alias("Kalle"); // this 
-        kalle.addPost("This is a litte test.");
-        kalle.addPost("This is the second little text. I wonder if this will work out okay.");
-        test.aliases.add(kalle);
-        Alias kolle = new Alias("Ram");
-        kolle.addPost("Hi, how are you? This is a test...");
-        kolle.addPost("You, have you seen this video? Goooh!");
-        test.aliases.add(kolle);
-        Alias kolle2 = new Alias("Sita");
-        kolle2.addPost("Hi, how area you? This is a test...");
-        kolle2.addPost("You, have you seen this video? GooohHoo!");
-        test.aliases.add(kolle2);
-
-        test.createFeatureVectors();
-        test.compareAllPairsOfAliases();
-        System.out.println("The best matching alias is: " + test.findBestMatch(0));
     }
 }
