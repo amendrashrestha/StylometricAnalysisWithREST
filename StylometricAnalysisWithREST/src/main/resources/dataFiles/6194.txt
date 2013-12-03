@@ -1,0 +1,50 @@
+16:29:37 word to the wise, dont piss off a cop by bothering him over something like this, if you get refused, drop it and leave, there is nothing that you can do (cept if your a chick and go down on the bouncer) that will get you into the establishment.
+
+If you stop a cop over this he is more likely to do you for being a nuissence than anything else, i know i wouldThis seperates users11:05:14 What i am looking for: A method to access and watch avi/mpeg movies and mp3 music on my tv/stereo
+
+I have the following infrastructure available
+
+wireless G network (access points etc) - possibility to go wired ethernet with a basic switch configuration (havent quite splashed out for some Cisco 2950's just yet!!), one main rig running windows XP with wireless, one laptop with wireless support, and possibly one other machine. Currently have no TV setup, but will in the near future.
+
+Basically i want to know how i can watch my downloaded movies and series on my TV?
+
+The MP3s i can transmit using something like a Belkin TuneCast, but any other options would be appreciated.
+
+Is the slingbox any good for this? From what i can see it streams from your TV to whereever, not the reverse.
+
+All comments and external links are very welcome
+
+I havent googled this extensively, as TBH i'm not entirely certain what im looking for, so my search phrase is currently "?"
+
+Should also mention i have a PowerColor 1950 Pro in the main rig. the Laptop is a Rock Quaddra DTS 9700This seperates users12:34:12 Is there anything official about this, like is there an "i dont know what a tracker mortgage" type site anywhere that covers this?This seperates users10:33:21 Hey guys, does anyone here use Virtual PC on a regular basis? I have some questions about it that i cant seem to find any answers for on google and the like, but that could be because im not phrasing it correctly
+
+Here is the situation. I installed a fresh copy of XP on a brand new HD. I have my old HD still, and its fine, its just that it was a slow IDe drive, and the new one is SATA. Anyway, the old install is fine, but i was wondering if there was a way to use Virtual PC to boot the old install from the old HD, so that i could export settings as i needed them while i work on my new install
+
+i have created a Virtual HD linked to the physical drive (pity it never said how long said linking would take, about 3 hours!!) But when i start the virtual machine, it hangs at the boot.
+
+Anyone have any thoughts?This seperates users15:37:32 Well thats just ghey, i thought that it would use the physical host as the "base" for its emulation, indeed it makes little sense for it not to do this!!This seperates users16:11:33 I know what it is for, but surely what im trying to do is inside its operating procedure, no?
+
+Has anyone ever used it in a similar fashion to what im trying to do? It is apparently possible, and it does seem to work for me, but the HD icon in the bottom corner of the VirtualPC screen seems to die (its going green, i can hear HD activity, then flashes orange, then gone) and if i close the session and re-open it, i get the prompt for safe mode!! So it is trying to work, im just missing something or other
+
+I read on an MSDN blog about removing the drive letter from the linked-to HD. Ive done that but need to test the fecker (requires restart and conversion of the Virtual HD) so i'll let you all know if that does it!!This seperates users10:39:32 Hi guys. Recently my sisters laptop has bucked the kicket, courtesy of my dad and a bit of DIY (destroy it youself)
+
+I have the HD out of the laptop, but cannot access my sisters folder in Documents and Settings, obviously because it is using the laptops permissions (has access for like laptop\admin, but not draz_desktop\admin)
+
+Is there a way to circumvent this? I havent actually had a chance to sit down at this yet (happened yesterday, will be going at it tonight) and to be honest i dont know how to phrase a search for Google (try typing win XP permission hack into google!!)
+
+Anyone got any thoughts?This seperates users22:21:48 Hey There
+
+Yeah the permissions thing was it. Had to take full ownership of the entire HD (just for safe keeping) and all subdirectories etc. then i could copy the contents over. Cheers for the heads up.This seperates users12:15:55 Hi All
+
+i cant think of anywhere else to put this (the auld boards.ie categories are fairly massive), so mods, please move as necessary. I appologise if this breaks any rules, i dont think it does, but anyway
+
+What sites do you all know of with good specials pages, but also ones that ship to ireland (so scan are gone immediately, 75 pounds to ship to ROI no matter what i was quoted the last time i dealt with them)
+
+Also include where to go, if its not blatant (dabs for example)
+
+the ones i know
+[I]komplett [/I] ([url]http://www.komplett.ie/k/k.aspx?action=weekly[/url])
+[I]overclockers.co.uk[/I] ([url]http://www.overclockers.co.uk/thisweek.php[/url])
+[I]dabs.ie[/I] ([url]http://www.dabs.ie/productlist.aspx?cl=4294963687&PageMode=1[/url]) This is listed as the clearence corner, but there are "Hot Deals" all over the place, i havent the time nor inclination to check if they are linked
+
+Anyone got any others?This seperates users

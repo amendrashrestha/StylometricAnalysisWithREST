@@ -1,0 +1,56 @@
+22:01:43 Nice picture Wertz! :) 
+
+It's well covered now, and the Earth's curvature is clearly visible from the shadow. I'm in Bray, and conditions here are perfect for viewing.
+
+What are you guys using to get those shots?This seperates users13:21:14 My mom called to tell me she got one of these this morning. She wanted to call the garda&#237; about it. 
+Coincidentally, the listed winning lotto numbers contained both our birthdays (5 & 13), which she usually uses when playing the lotto here and she recently spent a month in Alicante, but she still wasn't fooled by it. 
+
+In this day and age, with all the warnings on TV about ID theft etc, I'm amazed that anyone could fall for a scam like this.This seperates users19:05:36 Hi guys,
+I've just set up a new webpage for automatically handling benchmarks, overclocks, and stuff:
+
+[url]http://benchmarkcentral.net[/url]
+
+When you submit your data, the site updates all stats instantly to include your info, so you can see exactly where you are in the order of merit (no waiting for someone to update the stats). 
+
+You can also filter the results by cpu / gpu / cooling, etc, so you can compare your system to other similar systems. You can also edit your stats as often as you like. 
+
+Please check it out and see what you think,
+
+Thanks :)This seperates users13:28:25 [QUOTE=Beelzebub]It's a great idea.
+
+Could people include the Cooling device info as well?[/QUOTE]
+I could include that too, but I didn't want the database to get too cluttered. Theres also CPU batch, stepping, Vcore, Vdimm, SPD timings, and other stuff I could include, but I decided to keep it easy to read, and focus on the main data. 
+
+[QUOTE=L31mr0d]whats stopping people from abusing it and just posting spurious benchmarks?[/QUOTE]
+All 3D marks require a valid compare link. I'm going to include CPU-Z verification for overclocks too.
+
+Hopefully people won't try posting invalid scores, but if they do, they'll be removed asap.This seperates users14:22:42 Yeah, I think I will add them after all. I suppose the casual 3DMark bencher/gamer can just ignore the technical data, as most probably won't know what stepping their cpu is anyway.This seperates users14:54:28 Users can only have one account per username, I figured people can enter multiple systems by adding new accounts with a number appended, like
+L31mr0d
+L31mr0d#2
+L31mr0d#3
+etc.
+
+I've been meaning to make a site like this for years, ever since the first 3DMark forum thread that I posted in stopped being updated. I've lost count of the number of 3DMark threads started and then abandoned on many forums. 
+I remember being really frustrated at the delay in having my scores updated, and kept promising myself to make a database.This seperates users13:59:33 Thanks for the positive feedback guys, much appreciated! :D
+
+I'm going to take Beelzebub, L31mr0d, & Inquitus's advice, and add the stepping, vcore, ram timings, idle/load temps, cooling device, and anything else relevant etc.
+
+Adding raw data like Vcore, temps, timings, is fairly straightforward, because the user just types their numbers into an input box. However, the problem with adding things like cooling devices, cases, power supplies, etc, is that if I want to enable searching of the dbase for these items, then I need to make a drop-down list for each one, and try to include every possible option :( .This seperates users21:54:27 Yeah, I can do that, but it could get messy if people enter the same device in different formats. I was thinking of letting people enter new team names that way, but decided on the safer option of using the forums.
+
+It would be great if everyone thought the same way, but you'd be amazed at what some people do. You've probably seen many threads about 3DMark scores, where users are asked to post their scores and compare links. Sounds simple enough, but about 1 in 5 will still post the wrong link (no matter how well it's explained in the first post).This seperates users23:31:08 Yes, they clock very well, definitely get it!
+
+Check out some users E2140/E2160  clocks here:
+
+[url]http://forums.overclockers.co.uk/showthread.php?t=17728458&highlight=e2160[/url]This seperates users22:55:56 I've just set up a new website for automatically handling benchmarks, overclocks, and stuff:
+
+[url]http://benchmarkcentral.net[/url]
+
+When you submit your data, the site updates all stats instantly to include your info, so you can see exactly where you are in the order of merit (no waiting for someone to update the stats). 
+
+You can also filter the results by cpu / gpu / cooling, etc, so you can compare your system to other similar systems. You can also edit your stats as often as you like. 
+
+Please check it out and see what you think.This seperates users19:01:43 Thanks for submitting your stats awhir :), 
+
+I'll start a new thread for maximum exposure. I presume this is the correct forum to post it in, since it concerns guys who tweak their PCs.This seperates users12:23:18 Targeting people on methadone is a disgraceful, unethical way of trying to blackmail the government. What's next, will they stop dispensing blood-pressure medicine to pensioners?
+
+I won't be surprised if pharmacies are the first to suffer from a new wave of jump-overs, etc.This seperates users

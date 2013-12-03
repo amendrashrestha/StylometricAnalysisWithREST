@@ -4,9 +4,12 @@ package com.board.analyze.controller;
  *
  * @author ITE
  */
+import com.board.analyze.IOHandler.IOProperties;
+import com.board.analyze.IOHandler.IOReadWrite;
 import com.board.analyze.model.Alias;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -51,7 +54,7 @@ import java.util.Set;
 public class StylometricAnalysisMain {
 
     private Set<String> functionWords;			// Contains the function words we are using
-    private static String path = "C:\\Users\\ITE\\Documents\\NetBeansProjects\\StylometricAnalysisWithREST\\StylometricAnalysisWithREST\\src\\main\\resources\\function_words.txt"; 	// TODO: Change to the correct path;
+    private static String path = "C:\\Users\\ITE\\Documents\\NetBeansProjects\\StylometricAnalysisWithREST\\StylometricAnalysisWithREST\\src\\main\\resources\\functionWord\\function_words.txt"; 	// TODO: Change to the correct path;
     private List<Alias> aliases;				// The aliases we are interested in to compare        
     private List<List<Float>> featVectorForAllAliases;
 
@@ -60,10 +63,15 @@ public class StylometricAnalysisMain {
         loadFunctionWords();
         aliases = new ArrayList<Alias>();
     }
-    
-    public void executeStylo(List<Alias> aliasList) throws SQLException {
-        this.aliases = aliasList;
-        createFeatureVectors();
+
+    public void executeAnalysis(String ID) throws IOException, SQLException {
+        IOReadWrite ioRW = new IOReadWrite();
+        Alias user = new Alias();       
+        String basePath = IOProperties.INDIVIDUAL_USER_FILE_PATH;
+        String ext = IOProperties.USER_FILE_EXTENSION;
+        
+        user =  ioRW.convertTxtFileToAliasObj(basePath, ID, ext);
+        createFeatureVectors(user);
     }
 
     /**
@@ -266,25 +274,24 @@ public class StylometricAnalysisMain {
     /**
      * Loops through all aliases and construct their feature vectors
      */
-    public void createFeatureVectors() {
+    public void createFeatureVectors(Alias user) {
         featVectorForAllAliases = new ArrayList<List<Float>>();
-        for (Alias alias : aliases) {
+      //  for (Alias alias : aliases) {
             int cnt = 0;
-            alias.setFeatureVectorPosList(alias.initializeFeatureVectorPostList());
+            user.setFeatureVectorPosList(user.initializeFeatureVectorPostList());
             // Calculate each part of the "feature vector" for each individual post
-            for (String post : alias.getPosts()) {
+            for (String post : user.getPosts()) {
                 List<String> wordsInPost = extractWords(post);
-                alias.addToFeatureVectorPostList(countFunctionWords(wordsInPost), 0, cnt);
-                alias.addToFeatureVectorPostList(countWordLengths(wordsInPost), 293, cnt);
-                alias.addToFeatureVectorPostList(countCharactersAZ(post), 313, cnt);
-                alias.addToFeatureVectorPostList(countSpecialCharacters(post), 339, cnt);
-                alias.addToFeatureVectorPostList(countSentenceLengths(post), 359, cnt);
+                user.addToFeatureVectorPostList(countFunctionWords(wordsInPost), 0, cnt);
+                user.addToFeatureVectorPostList(countWordLengths(wordsInPost), 293, cnt);
+                user.addToFeatureVectorPostList(countCharactersAZ(post), 313, cnt);
+                user.addToFeatureVectorPostList(countSpecialCharacters(post), 339, cnt);
                 cnt++;
-            }
+         //   }
 
-            ArrayList<ArrayList<Float>> featureVectorList = alias.getFeatureVectorPosList();
+            ArrayList<ArrayList<Float>> featureVectorList = user.getFeatureVectorPosList();
 
-            int numberOfPosts = alias.getPosts().size();
+            int numberOfPosts = user.getPosts().size();
             int nrOfFeatures = featureVectorList.get(0).size();
             List<Float> featureVector = new ArrayList<Float>(Collections.nCopies(nrOfFeatures, 0.0f));
             // Now we average over all posts to create a single feature vector for each alias
@@ -296,7 +303,7 @@ public class StylometricAnalysisMain {
                 value /= numberOfPosts;
                 featureVector.set(i, value);
             }
-            alias.setFeatureVector(featureVector);
+            user.setFeatureVector(featureVector);
             featVectorForAllAliases.add(featureVector);
         }
         normalizeFeatureVector();
@@ -369,7 +376,7 @@ public class StylometricAnalysisMain {
         for (int i = 0; i < aliases.size(); i++) {
             for (int j = i + 1; j < aliases.size(); j++) {
                 double sim = compareFeatureVectors(aliases.get(i).getFeatureVector(), aliases.get(j).getFeatureVector());
-                System.out.println("Similarity between alias " + aliases.get(i).getName() + " and " + aliases.get(j).getName() + " is: " + sim);
+                System.out.println("Similarity between alias " + aliases.get(i).getUserID() + " and " + aliases.get(j).getUserID() + " is: " + sim);
             }
         }
     }
@@ -438,5 +445,11 @@ public class StylometricAnalysisMain {
             }
         }
 
+    }
+    
+    public static void main(String args[]) throws SQLException, IOException{
+        String userID = "1123";
+        StylometricAnalysisMain init = new StylometricAnalysisMain();
+        init.executeAnalysis(userID);
     }
 }

@@ -1,10 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.board.analyze.model;
 
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -13,18 +12,27 @@ import java.util.List;
  */
 public class Alias {
 
-    private List<Float> featureVector;
+     private List<Float> featureVector;
     private int nrOfFeatures;
-    private String name;
+    private String user;
+    private String type;
     private ArrayList<ArrayList<Float>> featureVectorPostList;
-    private List<String> posts;
+    public List<String> posts;
+    public List<String> postTime;
 
-    public Alias(String name) {
-        this.name = name;
-        setNrOfFeatures(293 + 20 + 26 + 21 + 6);
-        posts = new ArrayList<String>();
+    public Alias(String userID) throws SQLException {
+        this.user = userID;
         featureVector = new ArrayList<Float>();
         featureVectorPostList = new ArrayList<ArrayList<Float>>();
+    }
+
+    public Alias() {
+        setNrOfFeatures(293 + 20 + 26 + 21);
+    }
+
+    @Override
+    public String toString() {
+        return user;
     }
 
     public ArrayList<ArrayList<Float>> initializeFeatureVectorPostList() {
@@ -39,6 +47,14 @@ public class Alias {
         return list;
     }
 
+    public String getUserID() {
+        return user;
+    }
+
+    public void setUserID(String userID) {
+        this.user = userID;
+    }
+
     public List<String> getPosts() {
         return posts;
     }
@@ -51,10 +67,10 @@ public class Alias {
         posts.add(post);
     }
 
-    public void addToFeatureVectorPostList(ArrayList<Float> freqDist, int start, int index) {
+    public void addToFeatureVectorPostList(ArrayList<Float> freqDist, int startIndex, int index) {
         for (int i = 0; i < freqDist.size(); i++) {
-            featureVectorPostList.get(index).set(start, freqDist.get(i));
-            start++;
+            featureVectorPostList.get(index).set(startIndex, freqDist.get(i));
+            startIndex++;
         }
     }
 
@@ -86,11 +102,60 @@ public class Alias {
         this.nrOfFeatures = nrOfFeatures;
     }
 
-    public String getName() {
-        return name;
+    public String getUser() {
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public double[] getTimeVector() throws SQLException {
+
+        double[] rr = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        
+        for(String postHour : postTime){
+            String[] time = postHour.split(":");
+            int hr = Integer.parseInt(time[0]);
+            rr[hr]++;
+        }
+        return rr;
+    }
+
+    public static double[] getTimeVectorArray(List postTime) throws SQLException {
+
+        double[] rr = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        Iterator itr = postTime.iterator();
+
+        while (itr.hasNext()) {
+            Timestamp key = (Timestamp) itr.next();
+            int hr = key.getHours();
+            rr[hr]++;
+        }
+        return rr;
+    }
+
+    public void setPostTime(List postTime) {
+        this.postTime = postTime;
+    }
+
+    public List getPostTime() {
+        return postTime;
+    }
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 }
