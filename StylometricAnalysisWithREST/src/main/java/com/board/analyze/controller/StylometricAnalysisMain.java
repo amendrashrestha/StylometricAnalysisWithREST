@@ -64,14 +64,15 @@ public class StylometricAnalysisMain {
         aliases = new ArrayList<Alias>();
     }
 
-    public void executeAnalysis(String ID) throws IOException, SQLException {
+    public List<Float> executeAnalysis(String ID) throws IOException, SQLException {
         IOReadWrite ioRW = new IOReadWrite();
         Alias user = new Alias();       
         String basePath = IOProperties.INDIVIDUAL_USER_FILE_PATH;
         String ext = IOProperties.USER_FILE_EXTENSION;
         
         user =  ioRW.convertTxtFileToAliasObj(basePath, ID, ext);
-        createFeatureVectors(user);
+        List<Float> freatuteVector = createFeatureVectors(user);
+        return freatuteVector;
     }
 
     /**
@@ -274,7 +275,8 @@ public class StylometricAnalysisMain {
     /**
      * Loops through all aliases and construct their feature vectors
      */
-    public void createFeatureVectors(Alias user) {
+    public List<Float> createFeatureVectors(Alias user) {
+        List<Float> featureVector = new ArrayList<Float>();
         featVectorForAllAliases = new ArrayList<List<Float>>();
       //  for (Alias alias : aliases) {
             int cnt = 0;
@@ -293,7 +295,7 @@ public class StylometricAnalysisMain {
 
             int numberOfPosts = user.getPosts().size();
             int nrOfFeatures = featureVectorList.get(0).size();
-            List<Float> featureVector = new ArrayList<Float>(Collections.nCopies(nrOfFeatures, 0.0f));
+            featureVector = new ArrayList<Float>(Collections.nCopies(nrOfFeatures, 0.0f));
             // Now we average over all posts to create a single feature vector for each alias
             for (int i = 0; i < nrOfFeatures; i++) {
                 float value = 0.0f;
@@ -306,7 +308,8 @@ public class StylometricAnalysisMain {
             user.setFeatureVector(featureVector);
             featVectorForAllAliases.add(featureVector);
         }
-        normalizeFeatureVector();
+            return featureVector;
+        //normalizeFeatureVector();
     }
 
     /**
