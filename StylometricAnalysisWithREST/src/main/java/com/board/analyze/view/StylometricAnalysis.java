@@ -19,14 +19,13 @@ import javax.ws.rs.core.MediaType;
  */
 
 @Path("/stylometric/")
-public class StylometricAnalysis {
-
-    StylometricAnalysisMain init = new StylometricAnalysisMain();
+public class StylometricAnalysis {   
     
     @GET
     @Path("/returnStyloJSON/{UserID}")
     @Produces(MediaType.APPLICATION_JSON)    
     public List<Float> returnStylometric(@PathParam("UserID") String ID) throws SQLException, IOException{
+        StylometricAnalysisMain init = new StylometricAnalysisMain();
         List<Float> styloResult = init.executeAnalysis(ID);
         return styloResult;
     }  
