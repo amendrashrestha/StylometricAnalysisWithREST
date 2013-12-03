@@ -450,9 +450,9 @@ public class StylometricAnalysisMain {
 
     }
     
-    public static void main(String args[]) throws SQLException, IOException{
+    /*public static void main(String args[]) throws SQLException, IOException{
         String userID = "1123";
         StylometricAnalysisMain init = new StylometricAnalysisMain();
         init.executeAnalysis(userID);
-    }
+    }*/
 }
