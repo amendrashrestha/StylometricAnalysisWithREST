@@ -75,9 +75,9 @@ public class StylometricAnalysisMain {
         return freatuteVector;
     }
     
-    public List<Float> executePostAnalysis(String post){
-        List<String> posts = new ArrayList<String>();
-        posts.add(post);
+    public List<Float> executePostAnalysis(List posts){
+//        List<String> posts = new ArrayList<String>();
+//        posts.add(post);
         Alias user = new Alias();  
         user.setPosts(posts);
          List<Float> freatuteVector = createFeatureVectors(user);
