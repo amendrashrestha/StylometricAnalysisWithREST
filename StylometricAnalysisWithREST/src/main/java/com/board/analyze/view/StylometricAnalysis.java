@@ -37,8 +37,7 @@ public class StylometricAnalysis {
     @POST
     @Path("/post")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)    
-    
+    @Produces(MediaType.APPLICATION_JSON)       
     public List<Float> postStylometric(String input) throws SQLException, IOException{
         List<Float> stylo = init.executePostAnalysis(input);       
         return stylo;
