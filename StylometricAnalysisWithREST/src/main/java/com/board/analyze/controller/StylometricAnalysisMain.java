@@ -74,6 +74,15 @@ public class StylometricAnalysisMain {
         List<Float> freatuteVector = createFeatureVectors(user);
         return freatuteVector;
     }
+    
+    public List<Float> executePostAnalysis(String post){
+        List<String> posts = new ArrayList<String>();
+        posts.add(post);
+        Alias user = new Alias();  
+        user.setPosts(posts);
+         List<Float> freatuteVector = createFeatureVectors(user);
+        return freatuteVector;        
+    }
 
     /**
      * Extract words from text string, remove punctuation etc.
@@ -310,6 +319,45 @@ public class StylometricAnalysisMain {
         }
             return featureVector;
         //normalizeFeatureVector();
+    }
+    
+    /**
+     * Loops through all aliases and construct their feature vectors
+     */
+    public void createFeatureVectors(List<Alias> user) {
+        List<Float> featureVector = new ArrayList<Float>();
+        featVectorForAllAliases = new ArrayList<List<Float>>();
+        for (Alias alias : user) {
+            int cnt = 0;
+            alias.setFeatureVectorPosList(alias.initializeFeatureVectorPostList());
+            // Calculate each part of the "feature vector" for each individual post
+            for (String post : alias.getPosts()) {
+                List<String> wordsInPost = extractWords(post);
+                alias.addToFeatureVectorPostList(countFunctionWords(wordsInPost), 0, cnt);
+                alias.addToFeatureVectorPostList(countWordLengths(wordsInPost), 293, cnt);
+                alias.addToFeatureVectorPostList(countCharactersAZ(post), 313, cnt);
+                alias.addToFeatureVectorPostList(countSpecialCharacters(post), 339, cnt);
+                cnt++;
+            }
+
+            ArrayList<ArrayList<Float>> featureVectorList = alias.getFeatureVectorPosList();
+
+            int numberOfPosts = alias.getPosts().size();
+            int nrOfFeatures = featureVectorList.get(0).size();
+            featureVector = new ArrayList<Float>(Collections.nCopies(nrOfFeatures, 0.0f));
+            // Now we average over all posts to create a single feature vector for each alias
+            for (int i = 0; i < nrOfFeatures; i++) {
+                float value = 0.0f;
+                for (int j = 0; j < numberOfPosts; j++) {
+                    value += featureVectorList.get(j).get(i);
+                }
+                value /= numberOfPosts;
+                featureVector.set(i, value);
+            }
+            alias.setFeatureVector(featureVector);
+            featVectorForAllAliases.add(featureVector);
+        }
+        normalizeFeatureVector();  
     }
 
     /**
