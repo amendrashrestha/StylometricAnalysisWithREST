@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.BreakIterator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -54,13 +56,11 @@ import java.util.Set;
 public class StylometricAnalysisMain {
 
     private Set<String> functionWords;			// Contains the function words we are using
-    private static String path = "C:\\Users\\ITE\\Documents\\NetBeansProjects\\StylometricAnalysisWithREST\\StylometricAnalysisWithREST\\src\\main\\resources\\functionWord\\function_words.txt"; 	// TODO: Change to the correct path;
     private List<Alias> aliases;				// The aliases we are interested in to compare        
     private List<List<Float>> featVectorForAllAliases;
 
     public StylometricAnalysisMain() {
-        functionWords = new LinkedHashSet<String>();
-        loadFunctionWords();
+        loadFunctionWords(IOProperties.FUNCTION_WORDS);        
         aliases = new ArrayList<Alias>();
     }
 
@@ -76,8 +76,6 @@ public class StylometricAnalysisMain {
     }
     
     public List<Float> executePostAnalysis(List posts){
-//        List<String> posts = new ArrayList<String>();
-//        posts.add(post);
         Alias user = new Alias();  
         user.setPosts(posts);
          List<Float> freatuteVector = createFeatureVectors(user);
@@ -103,19 +101,10 @@ public class StylometricAnalysisMain {
     /**
      * Load the list of function words from file
      */
-    public void loadFunctionWords() {
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(path));
-
-            String strLine;
-            while ((strLine = br.readLine()) != null) {
-                functionWords.add(strLine);
-            }
-            br.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void loadFunctionWords(String words) {
+        functionWords = new LinkedHashSet<String>();
+        String[] tempWord = words.split(",");
+        functionWords.addAll(Arrays.asList(tempWord));
     }
 
     /**
@@ -128,6 +117,7 @@ public class StylometricAnalysisMain {
     public ArrayList<Float> countFunctionWords(List<String> words) {
         ArrayList<Float> tmpCounter = new ArrayList<Float>(Collections.nCopies(functionWords.size(), 0.0f));	// Initialize to zero
         for (int i = 0; i < words.size(); i++) {
+            System.out.println(words.get(i));
             if (functionWords.contains(words.get(i))) {
                 float value = (Float) tmpCounter.get(i);
                 value++;
@@ -498,9 +488,9 @@ public class StylometricAnalysisMain {
 
     }
     
-    /*public static void main(String args[]) throws SQLException, IOException{
+    public static void main(String args[]) throws SQLException, IOException{
         String userID = "1123";
         StylometricAnalysisMain init = new StylometricAnalysisMain();
         init.executeAnalysis(userID);
-    }*/
+    }
 }
