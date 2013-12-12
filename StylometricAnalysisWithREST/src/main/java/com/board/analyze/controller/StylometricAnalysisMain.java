@@ -54,7 +54,9 @@ import java.util.Set;
 public class StylometricAnalysisMain {
 
     private Set<String> functionWords;			// Contains the function words we are using
-    private static String path = "C:\\Users\\ITE\\Documents\\NetBeansProjects\\StylometricAnalysisWithREST\\StylometricAnalysisWithREST\\src\\main\\resources\\functionWord\\function_words.txt"; 	// TODO: Change to the correct path;
+    //private static String path = "C:\\Users\\ITE\\Documents\\NetBeansProjects\\StylometricAnalysisWithREST\\StylometricAnalysisWithREST\\src\\main\\resources\\functionWord\\function_words.txt"; 	// TODO: Change to the correct path;
+    private static String path = "src\\main\\resources\\functionWord\\function_words.txt"; 	// TODO: Change to the correct path;
+    
     private List<Alias> aliases;				// The aliases we are interested in to compare        
     private List<List<Float>> featVectorForAllAliases;
 
