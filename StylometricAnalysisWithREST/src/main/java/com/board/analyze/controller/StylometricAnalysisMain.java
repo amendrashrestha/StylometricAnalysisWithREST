@@ -553,16 +553,28 @@ public class StylometricAnalysisMain {
 
     }
 
-    public static void main(String args[]) throws SQLException, IOException {
-        String text1 = "This is a test";
-        String text2 = "This is also test";
+   /* public static void main(String args[]) throws SQLException, IOException {
+        String text1 = "This is a litte test.";
+        String text11 = "This is the second little text. I wonder if this will work out okay.";
+        String text12 = "This is the second little text. I wonder if this will work out okay.";
+        String text13 = "This is the second little text. I wonder if this will work out okay.";
+        String text2 = "Hi, how are you? This is a test...";
+        String text22 = "You, have you seen this video? Goooh!";
+        String text23 = "You, have you seen this video? Goooh!";
+        String text24 = "You, have you seen this video? Goooh!";
         List firstList = new ArrayList();
         List secondList = new ArrayList();
         firstList.add(text1);
+        firstList.add(text11);
+        firstList.add(text12);
+        firstList.add(text13);
         secondList.add(text2);
+        secondList.add(text22);
+        secondList.add(text23);
+        secondList.add(text24);
 
         StylometricAnalysisMain init = new StylometricAnalysisMain();
         double stylo = init.returnStylo(firstList, secondList);
         System.out.println("Stylo: " + stylo);
-    }
+    }*/
 }
