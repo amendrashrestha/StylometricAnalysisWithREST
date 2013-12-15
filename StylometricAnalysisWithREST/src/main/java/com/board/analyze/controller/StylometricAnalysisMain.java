@@ -81,6 +81,13 @@ public class StylometricAnalysisMain {
          List<Float> freatuteVector = createFeatureVectors(user);
         return freatuteVector;        
     }
+    
+    public List<Float> executeTxtStylo(String post){
+        Alias user = new Alias();  
+        user.setSinglePost(post);
+         List<Float> freatuteVector = createFeatureVectors(user);
+        return freatuteVector;        
+    }
 
     /**
      * Extract words from text string, remove punctuation etc.
@@ -488,9 +495,9 @@ public class StylometricAnalysisMain {
 
     }
     
-    public static void main(String args[]) throws SQLException, IOException{
+    /*public static void main(String args[]) throws SQLException, IOException{
         String userID = "1123";
         StylometricAnalysisMain init = new StylometricAnalysisMain();
         init.executeAnalysis(userID);
-    }
+    }*/
 }

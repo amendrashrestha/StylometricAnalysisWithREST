@@ -19,6 +19,7 @@ public class Alias {
     private ArrayList<ArrayList<Float>> featureVectorPostList;
     public List<String> posts;
     public List<String> postTime;
+    public String singlePost;
 
     public Alias(String userID) throws SQLException {
         this.user = userID;
@@ -61,6 +62,14 @@ public class Alias {
 
     public void setPosts(List<String> posts) {
         this.posts = posts;
+    }
+    
+    public String getSinglePost(){
+        return singlePost;
+    }
+    
+    public void setSinglePost(String post){
+        this.singlePost = post;
     }
 
     public void addPost(String post) {
