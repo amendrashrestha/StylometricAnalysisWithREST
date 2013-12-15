@@ -38,12 +38,13 @@ public class StylometricAnalysis {
     @GET
     @Path("/returnStylometricJSON")
     @Produces(MediaType.APPLICATION_JSON)    
-    public List<Float> returnStylometricJSON(@QueryParam("text1") String text1, @QueryParam("text2") String text2) throws SQLException, IOException{
-        List<String> posts = new ArrayList<String>();
-        posts.add(text1);
-        posts.add(text2);
-        List<Float> styloResult = init.executePostAnalysis(posts);
-        return styloResult;
+    public Float returnStylometricJSON(@QueryParam("text1") String text1, @QueryParam("text2") String text2) throws SQLException, IOException{
+        List<String> firstList = new ArrayList<String>();
+        firstList.add(text1);
+        List<String> secondList = new ArrayList<String>();
+        secondList.add(text2);
+        double styloResult = init.returnStylo(firstList, secondList);
+        return (float) styloResult;
     } 
     
     @POST
