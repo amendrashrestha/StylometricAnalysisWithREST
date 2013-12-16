@@ -71,4 +71,19 @@ public class IOReadWrite {
         return a;
     }
     
+        
+    public List<Alias> convertUserToObj(List post1, List post2){
+        List<Alias> aliasList = new ArrayList<Alias>();
+        Alias alias1 = new Alias();
+        Alias alias2 = new Alias();
+        
+        alias1.setUserID("1");
+        alias2.setUserID("2");
+        alias1.setPosts(post1);
+        alias2.setPosts(post2);
+        aliasList.add(alias1);
+        aliasList.add(alias2);
+        return aliasList;   
+    }
+    
 }

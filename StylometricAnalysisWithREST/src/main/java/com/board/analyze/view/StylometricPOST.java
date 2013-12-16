@@ -16,6 +16,8 @@ import javax.ws.rs.core.MediaType;
  *
  * @author ITE
  */
+
+
 public class StylometricPOST {
     
     public static void main(String args[]) {
@@ -23,12 +25,14 @@ public class StylometricPOST {
 
         WebResource wr = client.resource("http://localhost:8080/StylometricAnalysisWithREST/rest/stylometric/post");
 
-        String input = "This is test1";
+
         String input1 = "This is test2";
+        String input2 = "This is test2";
         
         List<String> inputList = new ArrayList<String>();
-        inputList.add(input);
+
         inputList.add(input1);
+        inputList.add(input2);
         String jsonList = new Gson().toJson(inputList);       
 
         ClientResponse cr = wr.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonList);

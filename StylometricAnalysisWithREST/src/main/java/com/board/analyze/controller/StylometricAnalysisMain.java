@@ -13,11 +13,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.BreakIterator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This is some code for doing stylometric matching of aliases based on posts
@@ -54,36 +58,56 @@ import java.util.Set;
 public class StylometricAnalysisMain {
 
     private Set<String> functionWords;			// Contains the function words we are using
-    //private static String path = "C:\\Users\\ITE\\Documents\\NetBeansProjects\\StylometricAnalysisWithREST\\StylometricAnalysisWithREST\\src\\main\\resources\\functionWord\\function_words.txt"; 	// TODO: Change to the correct path;
-    private static String path = "src\\main\\resources\\functionWord\\function_words.txt"; 	// TODO: Change to the correct path;
-    
     private List<Alias> aliases;				// The aliases we are interested in to compare        
     private List<List<Float>> featVectorForAllAliases;
 
     public StylometricAnalysisMain() {
-        functionWords = new LinkedHashSet<String>();
-        loadFunctionWords();
+        loadFunctionWords(IOProperties.FUNCTION_WORDS);
         aliases = new ArrayList<Alias>();
     }
 
     public List<Float> executeAnalysis(String ID) throws IOException, SQLException {
         IOReadWrite ioRW = new IOReadWrite();
-        Alias user = new Alias();       
+        Alias user = new Alias();
         String basePath = IOProperties.INDIVIDUAL_USER_FILE_PATH;
         String ext = IOProperties.USER_FILE_EXTENSION;
-        
-        user =  ioRW.convertTxtFileToAliasObj(basePath, ID, ext);
+
+        user = ioRW.convertTxtFileToAliasObj(basePath, ID, ext);
         List<Float> freatuteVector = createFeatureVectors(user);
         return freatuteVector;
     }
-    
-    public List<Float> executePostAnalysis(List posts){
-//        List<String> posts = new ArrayList<String>();
-//        posts.add(post);
-        Alias user = new Alias();  
+
+    public List<Float> executePostAnalysis(List posts) {
+        Alias user = new Alias();
         user.setPosts(posts);
-         List<Float> freatuteVector = createFeatureVectors(user);
-        return freatuteVector;        
+        List<Float> freatuteVector = createFeatureVectors(user);
+        return freatuteVector;
+    }
+
+    public double returnStylo(List post1, List post2) {
+        double stylo = 0.0;
+        try {
+            IOReadWrite ioRW = new IOReadWrite();
+            List<Alias> aliasList = ioRW.convertUserToObj(post1, post2);
+            stylo = executeStylo(aliasList);
+        } catch (SQLException ex) {
+            Logger.getLogger(StylometricAnalysisMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return stylo;
+    }
+
+    public double executeStylo(List<Alias> aliasList) throws SQLException {
+        this.aliases = aliasList;
+        createFeatureVectors();
+        double stylo = compareFeatureVectors(aliases.get(0).getFeatureVector(), aliases.get(1).getFeatureVector());
+        return stylo;
+    }
+
+    public List<Float> executeTxtStylo(String post) {
+        Alias user = new Alias();
+        user.setSinglePost(post);
+        List<Float> freatuteVector = createFeatureVectors(user);
+        return freatuteVector;
     }
 
     /**
@@ -105,19 +129,10 @@ public class StylometricAnalysisMain {
     /**
      * Load the list of function words from file
      */
-    public void loadFunctionWords() {
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(path));
-
-            String strLine;
-            while ((strLine = br.readLine()) != null) {
-                functionWords.add(strLine);
-            }
-            br.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void loadFunctionWords(String words) {
+        functionWords = new LinkedHashSet<String>();
+        String[] tempWord = words.split(",");
+        functionWords.addAll(Arrays.asList(tempWord));
     }
 
     /**
@@ -130,7 +145,9 @@ public class StylometricAnalysisMain {
     public ArrayList<Float> countFunctionWords(List<String> words) {
         ArrayList<Float> tmpCounter = new ArrayList<Float>(Collections.nCopies(functionWords.size(), 0.0f));	// Initialize to zero
         for (int i = 0; i < words.size(); i++) {
-            if (functionWords.contains(words.get(i))) {
+            String word = words.get(i).toLowerCase();
+            System.out.println(word);
+            if (functionWords.contains(word)) {
                 float value = (Float) tmpCounter.get(i);
                 value++;
                 tmpCounter.set(i, value);
@@ -289,18 +306,18 @@ public class StylometricAnalysisMain {
     public List<Float> createFeatureVectors(Alias user) {
         List<Float> featureVector = new ArrayList<Float>();
         featVectorForAllAliases = new ArrayList<List<Float>>();
-      //  for (Alias alias : aliases) {
-            int cnt = 0;
-            user.setFeatureVectorPosList(user.initializeFeatureVectorPostList());
-            // Calculate each part of the "feature vector" for each individual post
-            for (String post : user.getPosts()) {
-                List<String> wordsInPost = extractWords(post);
-                user.addToFeatureVectorPostList(countFunctionWords(wordsInPost), 0, cnt);
-                user.addToFeatureVectorPostList(countWordLengths(wordsInPost), 293, cnt);
-                user.addToFeatureVectorPostList(countCharactersAZ(post), 313, cnt);
-                user.addToFeatureVectorPostList(countSpecialCharacters(post), 339, cnt);
-                cnt++;
-         //   }
+        //  for (Alias alias : aliases) {
+        int cnt = 0;
+        user.setFeatureVectorPosList(user.initializeFeatureVectorPostList());
+        // Calculate each part of the "feature vector" for each individual post
+        for (String post : user.getPosts()) {
+            List<String> wordsInPost = extractWords(post);
+            user.addToFeatureVectorPostList(countFunctionWords(wordsInPost), 0, cnt);
+            user.addToFeatureVectorPostList(countWordLengths(wordsInPost), 293, cnt);
+            user.addToFeatureVectorPostList(countCharactersAZ(post), 313, cnt);
+            user.addToFeatureVectorPostList(countSpecialCharacters(post), 339, cnt);
+            cnt++;
+            //   }
 
             ArrayList<ArrayList<Float>> featureVectorList = user.getFeatureVectorPosList();
 
@@ -319,10 +336,10 @@ public class StylometricAnalysisMain {
             user.setFeatureVector(featureVector);
             featVectorForAllAliases.add(featureVector);
         }
-            return featureVector;
+        return featureVector;
         //normalizeFeatureVector();
     }
-    
+
     /**
      * Loops through all aliases and construct their feature vectors
      */
@@ -359,7 +376,43 @@ public class StylometricAnalysisMain {
             alias.setFeatureVector(featureVector);
             featVectorForAllAliases.add(featureVector);
         }
-        normalizeFeatureVector();  
+        normalizeFeatureVector();
+    }
+
+    public void createFeatureVectors() {
+        List<Float> featureVector = new ArrayList<Float>();
+        featVectorForAllAliases = new ArrayList<List<Float>>();
+        for (Alias alias : aliases) {
+            int cnt = 0;
+            alias.setFeatureVectorPosList(alias.initializeFeatureVectorPostList());
+            // Calculate each part of the "feature vector" for each individual post
+            for (String post : alias.getPosts()) {
+                List<String> wordsInPost = extractWords(post);
+                alias.addToFeatureVectorPostList(countFunctionWords(wordsInPost), 0, cnt);
+                alias.addToFeatureVectorPostList(countWordLengths(wordsInPost), 293, cnt);
+                alias.addToFeatureVectorPostList(countCharactersAZ(post), 313, cnt);
+                alias.addToFeatureVectorPostList(countSpecialCharacters(post), 339, cnt);
+                cnt++;
+            }
+
+            ArrayList<ArrayList<Float>> featureVectorList = alias.getFeatureVectorPosList();
+
+            int numberOfPosts = alias.getPosts().size();
+            int nrOfFeatures = featureVectorList.get(0).size();
+            featureVector = new ArrayList<Float>(Collections.nCopies(nrOfFeatures, 0.0f));
+            // Now we average over all posts to create a single feature vector for each alias
+            for (int i = 0; i < nrOfFeatures; i++) {
+                float value = 0.0f;
+                for (int j = 0; j < numberOfPosts; j++) {
+                    value += featureVectorList.get(j).get(i);
+                }
+                value /= numberOfPosts;
+                featureVector.set(i, value);
+            }
+            alias.setFeatureVector(featureVector);
+            featVectorForAllAliases.add(featureVector);
+        }
+        normalizeFeatureVector();
     }
 
     /**
@@ -499,10 +552,29 @@ public class StylometricAnalysisMain {
         }
 
     }
-    
-    /*public static void main(String args[]) throws SQLException, IOException{
-        String userID = "1123";
+
+   /* public static void main(String args[]) throws SQLException, IOException {
+        String text1 = "This is a litte test.";
+        String text11 = "This is the second little text. I wonder if this will work out okay.";
+        String text12 = "This is the second little text. I wonder if this will work out okay.";
+        String text13 = "This is the second little text. I wonder if this will work out okay.";
+        String text2 = "Hi, how are you? This is a test...";
+        String text22 = "You, have you seen this video? Goooh!";
+        String text23 = "You, have you seen this video? Goooh!";
+        String text24 = "You, have you seen this video? Goooh!";
+        List firstList = new ArrayList();
+        List secondList = new ArrayList();
+        firstList.add(text1);
+        firstList.add(text11);
+        firstList.add(text12);
+        firstList.add(text13);
+        secondList.add(text2);
+        secondList.add(text22);
+        secondList.add(text23);
+        secondList.add(text24);
+
         StylometricAnalysisMain init = new StylometricAnalysisMain();
-        init.executeAnalysis(userID);
+        double stylo = init.returnStylo(firstList, secondList);
+        System.out.println("Stylo: " + stylo);
     }*/
 }

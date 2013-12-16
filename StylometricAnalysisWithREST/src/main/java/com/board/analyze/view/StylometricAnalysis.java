@@ -15,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 /**
  *
@@ -32,7 +33,19 @@ public class StylometricAnalysis {
     public List<Float> returnStylometric(@PathParam("UserID") String ID) throws SQLException, IOException{
         List<Float> styloResult = init.executeAnalysis(ID);
         return styloResult;
-    }  
+    } 
+    
+    @GET
+    @Path("/returnStylometricJSON")
+    @Produces(MediaType.APPLICATION_JSON)    
+    public Float returnStylometricJSON(@QueryParam("text1") String text1, @QueryParam("text2") String text2) throws SQLException, IOException{
+        List<String> firstList = new ArrayList<String>();
+        firstList.add(text1);
+        List<String> secondList = new ArrayList<String>();
+        secondList.add(text2);
+        double styloResult = init.returnStylo(firstList, secondList);
+        return (float) styloResult;
+    } 
     
     @POST
     @Path("/post")
