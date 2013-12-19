@@ -65,8 +65,8 @@ public class StylometricAnalysis {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)       
     public HashMap<Integer, int[]> clusterUser(List<User> input) throws SQLException, IOException{
-        Cluster init = new Cluster();
-        HashMap<Integer, int[]> stylo = init.getAllClusterizedUser(input);       
+        Cluster initCluster = new Cluster();
+        HashMap<Integer, int[]> stylo = initCluster.getAllClusterizedUser(input);       
         return stylo;
     }
 }
