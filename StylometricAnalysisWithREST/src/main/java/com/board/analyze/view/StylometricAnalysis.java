@@ -5,9 +5,13 @@
 package com.board.analyze.view;
 
 import com.board.analyze.controller.StylometricAnalysisMain;
+import com.user.cluster.clustering.Cluster;
+import com.user.cluster.parser.model.Posts;
+import com.user.cluster.parser.model.User;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -55,4 +59,14 @@ public class StylometricAnalysis {
         List<Float> stylo = init.executePostAnalysis(input);       
         return stylo;
     }  
+    
+    @POST
+    @Path("/cluster")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)       
+    public HashMap<Integer, int[]> clusterUser(List<User> input) throws SQLException, IOException{
+        Cluster init = new Cluster();
+        HashMap<Integer, int[]> stylo = init.getAllClusterizedUser(input);       
+        return stylo;
+    }
 }
