@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -54,7 +55,9 @@ public class IOReadWrite {
     public String readTxtFileAsString(String basePath, String fileName, String extension) throws FileNotFoundException, IOException {
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            File file = new File(basePath + "/" + fileName + extension);
+            String filepath = basePath + "/"+ fileName + extension;
+            
+            File file = new File(filepath);
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line = null;
             if (file.exists()) {

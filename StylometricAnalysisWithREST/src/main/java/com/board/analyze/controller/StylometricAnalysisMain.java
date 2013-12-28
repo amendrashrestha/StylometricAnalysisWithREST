@@ -10,6 +10,7 @@ import com.board.analyze.model.Alias;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -63,13 +64,20 @@ public class StylometricAnalysisMain {
 
     public StylometricAnalysisMain() {
         loadFunctionWords(IOProperties.FUNCTION_WORDS);
+        loadDataFile(IOProperties.INDIVIDUAL_USER_FILE_PATH);
         aliases = new ArrayList<Alias>();
+    }
+    
+    public void loadDataFile(String path){
+         String filepath = getClass().getResource("../../../../").getFile() + path;
+         System.out.println(filepath);
     }
 
     public List<Float> executeAnalysis(String ID) throws IOException, SQLException {
         IOReadWrite ioRW = new IOReadWrite();
         Alias user = new Alias();
-        String basePath = IOProperties.INDIVIDUAL_USER_FILE_PATH;
+        String tempBasePath = IOProperties.INDIVIDUAL_USER_FILE_PATH;
+        String basePath = getClass().getResource("../../../../").getFile() + tempBasePath;
         String ext = IOProperties.USER_FILE_EXTENSION;
 
         user = ioRW.convertTxtFileToAliasObj(basePath, ID, ext);
@@ -129,10 +137,21 @@ public class StylometricAnalysisMain {
     /**
      * Load the list of function words from file
      */
-    public void loadFunctionWords(String words) {
+    public void loadFunctionWords(String path) {
         functionWords = new LinkedHashSet<String>();
-        String[] tempWord = words.split(",");
-        functionWords.addAll(Arrays.asList(tempWord));
+        BufferedReader br;
+        try {
+            String filepath = getClass().getResource("../../../../").getFile() + path;
+            br = new BufferedReader(new FileReader(filepath));
+
+            String strLine;
+            while ((strLine = br.readLine()) != null) {
+                functionWords.add(strLine);
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -146,7 +165,7 @@ public class StylometricAnalysisMain {
         ArrayList<Float> tmpCounter = new ArrayList<Float>(Collections.nCopies(functionWords.size(), 0.0f));	// Initialize to zero
         for (int i = 0; i < words.size(); i++) {
             String word = words.get(i).toLowerCase();
-            System.out.println(word);
+            //System.out.println(word);
             if (functionWords.contains(word)) {
                 float value = (Float) tmpCounter.get(i);
                 value++;
@@ -553,7 +572,7 @@ public class StylometricAnalysisMain {
 
     }
 
-   /* public static void main(String args[]) throws SQLException, IOException {
+    public static void main(String args[]) throws SQLException, IOException {
         String text1 = "This is a litte test.";
         String text11 = "This is the second little text. I wonder if this will work out okay.";
         String text12 = "This is the second little text. I wonder if this will work out okay.";
@@ -576,5 +595,5 @@ public class StylometricAnalysisMain {
         StylometricAnalysisMain init = new StylometricAnalysisMain();
         double stylo = init.returnStylo(firstList, secondList);
         System.out.println("Stylo: " + stylo);
-    }*/
+    }
 }
