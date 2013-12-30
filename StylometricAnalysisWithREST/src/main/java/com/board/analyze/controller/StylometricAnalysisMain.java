@@ -572,7 +572,7 @@ public class StylometricAnalysisMain {
 
     }
 
-    public static void main(String args[]) throws SQLException, IOException {
+   /*public static void main(String args[]) throws SQLException, IOException {
         String text1 = "This is a litte test.";
         String text11 = "This is the second little text. I wonder if this will work out okay.";
         String text12 = "This is the second little text. I wonder if this will work out okay.";
@@ -595,5 +595,5 @@ public class StylometricAnalysisMain {
         StylometricAnalysisMain init = new StylometricAnalysisMain();
         double stylo = init.returnStylo(firstList, secondList);
         System.out.println("Stylo: " + stylo);
-    }
+    }*/
 }
